@@ -413,6 +413,13 @@ body {
 }
 
 @media screen and (max-width: 480px) {
+    div#error-message {
+        position: absolute;
+        width: 277px;
+        bottom: -144px;
+        left: 5px;
+    }
+    
     .profile-box {
         padding: 15px;
     }
