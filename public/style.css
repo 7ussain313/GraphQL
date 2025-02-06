@@ -132,12 +132,12 @@ h2 {
 }
 
 #logout-btn {
-    background: #ff3333;
+    background:  rgba(255, 255, 255, 0.12);
     color: white;
 }
 
 #logout-btn:hover {
-    background: #ff0000;
+    background:  rgba(255, 255, 255, 0.12);
 }
 
 * {
@@ -164,9 +164,9 @@ body {
 .welcome-message {
     position: absolute;
     top: -150px;
-    left: -565px;
+    left: -555px;
     width: 310px;
-    background-color: #1f293a;
+    background-color: rgba(255, 255, 255, 0.1);
     padding: 15px 25px;
     border-radius: 8px;
     z-index: 1000;
@@ -418,7 +418,7 @@ body {
     }
 
     .profile-box.personal-info-box {
-        bottom: 121px;
+        bottom: -64px;
         left: -179px;
         position: absolute;
         height: 492px;
@@ -429,15 +429,25 @@ body {
         position: absolute;
         left: -176px;
         width: 361px;
-        bottom: -60px;
+        bottom: -262px;
         height: 140px;
     }
-    
+
+    .welcome-message {
+        position: absolute;
+        top: -70px;
+        left: -121px;
+        width: 119%;
+        margin-bottom: 59px;
+        height: 57px;
+        bottom: 156px;
+    }
+
     .profile-box.level-box {
         position: absolute;
         left: -176px;
         width: 361px;
-        bottom: -228px;
+        bottom: -433px;
         height: 140px;
     }
 
@@ -445,7 +455,7 @@ body {
         position: absolute;
         left: -176px;
         width: 361px;
-        bottom: -637px;
+        bottom: -866px;
         height: 391px;
     }
 
@@ -464,14 +474,15 @@ body {
 
     .logout-box {
         position: absolute;
-        top: 1392px;
-        right: -195px;
-        width: 384px;
+        top: 1662px;
+        right: -65px;
+        width: 125px;
         z-index: 1000;
         border-radius: 10px;
         padding: 15px;
         backdrop-filter: blur(10px);
     }
+    
     .profile-content-wrapper {
         gap: 15px;
     }
@@ -512,7 +523,7 @@ body {
         position: absolute;
         left: -176px;
         width: 361px;
-        bottom: -904px;
+        bottom: -1170px;
         height: 270px;
     }
 

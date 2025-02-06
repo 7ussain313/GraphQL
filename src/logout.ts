@@ -7,7 +7,7 @@ function createLogoutUI() {
 
     const logoutBoxHTML = `
         <div class="logout-box">
-            <button id="logout-btn" class="btn">⏻</button>
+            <button id="logout-btn" class="btn">⛔</button>
         </div>
     `;
 

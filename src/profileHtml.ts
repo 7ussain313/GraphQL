@@ -7,10 +7,10 @@ export function createProfileTemplate(
 ) {
     return `
         <div class="profile-main-container">
-            <div class="welcome-message">
-                <h1>Welcome, ${attrs.firstName} ${attrs.lastName}! 👋</h1>
-            </div>
             <div class="profile-content-wrapper">
+                <div class="welcome-message">
+                    <h1>Welcome, ${attrs.firstName} ${attrs.lastName}! 👋</h1>
+                </div>
                 <div class="profile-box personal-info-box">
                     <h2>Profile Information</h2>
                     <div class="profile-info">
