@@ -75,9 +75,10 @@ async function createProfileUI() {
 
         const progressGraphContainer = profileContainer.querySelector('.progress-graph-container') as HTMLElement;
         if (progressGraphContainer) {
-            const progressGraph = createXPProgressGraph(projectResponse.data.transaction);
-            progressGraphContainer.appendChild(progressGraph);
-        }
+        const progressGraph = createXPProgressGraph(projectResponse.data.transaction);
+        progressGraphContainer.appendChild(progressGraph);
+    }
+
         
         document.body.appendChild(profileContainer);
     } catch (error) {
