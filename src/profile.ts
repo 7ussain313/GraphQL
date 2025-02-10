@@ -77,7 +77,7 @@ async function createProfileUI() {
         if (progressGraphContainer) {
         const progressGraph = createXPProgressGraph(projectResponse.data.transaction);
         progressGraphContainer.appendChild(progressGraph);
-    }
+}
 
         
         document.body.appendChild(profileContainer);
