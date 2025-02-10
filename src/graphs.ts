@@ -157,3 +157,135 @@ export function createProjectXPChart(projects: Project[]): SVGElement {
 
     return svg;
 }
+export function createXPProgressGraph(transactions: any[]) {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("width", "100%");
+    svg.setAttribute("height", "100%");
+    svg.setAttribute("viewBox", "0 0 800 400");
+
+    const dataPoints = transactions.map((t, index) => ({
+        x: index,
+        y: t.amount,
+        date: new Date(t.createdAt),
+        name: t.object.name
+    }));
+
+    const maxXP = Math.max(...dataPoints.map(p => p.y));
+    const points = dataPoints.map((p, i) => {
+        const x = (i / (dataPoints.length - 1)) * 700 + 50;
+        const y = 350 - (p.y / maxXP) * 300;
+        return `${x},${y}`;
+    }).join(" ");
+
+    // Add Y-axis labels (XP values)
+    for (let i = 0; i <= 5; i++) {
+        const yLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        const yValue = Math.round((maxXP / 5) * i);
+        yLabel.setAttribute("x", "10");
+        yLabel.setAttribute("y", (350 - (i * 60)).toString());
+        yLabel.setAttribute("fill", "white");
+        yLabel.setAttribute("font-size", "12");
+        yLabel.textContent = `${yValue}XP`;
+        svg.appendChild(yLabel);
+    }
+
+    // Add X-axis labels (dates)
+    const dateLabels = dataPoints.filter((_, i) => i % Math.ceil(dataPoints.length / 5) === 0);
+    dateLabels.forEach((point, i) => {
+        const xLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        const x = (i * 700 / (dateLabels.length - 1)) + 50;
+        xLabel.setAttribute("x", x.toString());
+        xLabel.setAttribute("y", "370");
+        xLabel.setAttribute("fill", "white");
+        xLabel.setAttribute("font-size", "12");
+        xLabel.setAttribute("text-anchor", "middle");
+        xLabel.textContent = point.date.toLocaleDateString();
+        svg.appendChild(xLabel);
+    });
+
+    // Rest of your existing graph code...
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", `M ${points}`);
+    path.setAttribute("stroke", "#0ef");
+    path.setAttribute("stroke-width", "2");
+    path.setAttribute("fill", "none");
+
+    dataPoints.forEach((point, i) => {
+        const x = (i / (dataPoints.length - 1)) * 700 + 50;
+        const y = 350 - (point.y / maxXP) * 300;
+
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", x.toString());
+        circle.setAttribute("cy", y.toString());
+        circle.setAttribute("r", "4");
+        circle.setAttribute("fill", "#0ef");
+
+        circle.addEventListener('mouseover', (e) => {
+            const tooltip = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            const formattedXP = formatFileSize(point.y);
+            const date = new Date(point.date).toLocaleDateString();
+            
+            // Create multiple lines for the tooltip
+            const tooltipContent = [
+                `Project: ${point.name}`,
+                `XP: ${formattedXP}`,
+                `Date: ${date}`
+            ];
+
+            tooltipContent.forEach((text, index) => {
+                const tspanElement = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+                tspanElement.setAttribute("x", (x + 10).toString());
+                tspanElement.setAttribute("y", (y - 30 + (index * 20)).toString());
+                tspanElement.textContent = text;
+                tooltip.appendChild(tspanElement);
+            });
+
+            tooltip.setAttribute("fill", "white");
+            tooltip.setAttribute("font-size", "12");
+            tooltip.setAttribute("class", "tooltip");
+            
+            // Add background rectangle for better readability
+            const bbox = tooltip.getBBox();
+            const background = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            background.setAttribute("x", (bbox.x - 5).toString());
+            background.setAttribute("y", (bbox.y - 5).toString());
+            background.setAttribute("width", (bbox.width + 10).toString());
+            background.setAttribute("height", (bbox.height + 10).toString());
+            background.setAttribute("fill", "rgba(0, 0, 0, 0.8)");
+            background.setAttribute("rx", "4");
+            background.setAttribute("class", "tooltip-bg");
+
+            svg.appendChild(background);
+            svg.appendChild(tooltip);
+        });
+
+        circle.addEventListener('mouseout', () => {
+            const tooltip = svg.querySelector('.tooltip');
+            const tooltipBg = svg.querySelector('.tooltip-bg');
+            if (tooltip) svg.removeChild(tooltip);
+            if (tooltipBg) svg.removeChild(tooltipBg);
+        });
+
+        svg.appendChild(circle);
+    });
+
+    const xAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    xAxis.setAttribute("x1", "50");
+    xAxis.setAttribute("y1", "350");
+    xAxis.setAttribute("x2", "750");
+    xAxis.setAttribute("y2", "350");
+    xAxis.setAttribute("stroke", "white");
+
+    const yAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    yAxis.setAttribute("x1", "50");
+    yAxis.setAttribute("y1", "50");
+    yAxis.setAttribute("x2", "50");
+    yAxis.setAttribute("y2", "350");
+    yAxis.setAttribute("stroke", "white");
+
+    svg.appendChild(path);
+    svg.appendChild(xAxis);
+    svg.appendChild(yAxis);
+
+    return svg;
+}

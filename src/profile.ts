@@ -3,6 +3,7 @@ interface ProjectTransaction {
         name: string;
     };
     amount: number;
+    createdAt: string;
 }
 
 interface Project {
@@ -11,7 +12,7 @@ interface Project {
 }
 
 import { basicUserIdentification, xpAmount, userLevel, auditsRatio, userProjectXp } from './graphql.js';
-import { createAuditRatioGraph, createProjectXPChart, formatFileSize } from './graphs.js';
+import { createAuditRatioGraph, createProjectXPChart, createXPProgressGraph, formatFileSize } from './graphs.js';
 import { createProfileTemplate } from './profileHtml.js';
 
 async function createProfileUI() {
@@ -70,6 +71,12 @@ async function createProfileUI() {
             
             const projectGraph = createProjectXPChart(latestProjects);
             projectGraphContainer.appendChild(projectGraph);
+        }
+
+        const progressGraphContainer = profileContainer.querySelector('.progress-graph-container') as HTMLElement;
+        if (progressGraphContainer) {
+            const progressGraph = createXPProgressGraph(projectResponse.data.transaction);
+            progressGraphContainer.appendChild(progressGraph);
         }
         
         document.body.appendChild(profileContainer);
