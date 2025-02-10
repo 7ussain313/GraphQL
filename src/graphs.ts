@@ -220,7 +220,7 @@ export function createXPProgressGraph(transactions: any[]) {
         circle.setAttribute("r", "4");
         circle.setAttribute("fill", "#0ef");
 
-        circle.addEventListener('mouseover', (e) => {
+        circle.addEventListener('mouseover', () => {
             const tooltip = document.createElementNS("http://www.w3.org/2000/svg", "text");
             const formattedXP = formatFileSize(point.y);
             const date = new Date(point.date).toLocaleDateString();
