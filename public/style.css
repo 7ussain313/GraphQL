@@ -308,11 +308,11 @@ body {
 
   .graph-container:hover {
       background: rgba(255, 255, 255, 0.12);
-  }
+ }
 
   .profile-box.progress-box {
     position: absolute;
-    bottom: -1000px;
+    bottom: -2047px;
     left: -556px;
     width: 1120px;
     height: 500px;
@@ -463,9 +463,9 @@ body {
 
     .welcome-message {
         position: absolute;
-        top: -70px;
-        left: -121px;
-        width: 119%;
+        top: -163px;
+        left: -113px;
+        width: 124%;
         margin-bottom: 59px;
         height: 57px;
         bottom: 156px;
