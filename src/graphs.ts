@@ -4,46 +4,18 @@ export function createAuditRatioGraph(totalUp: number, totalDown: number): SVGEl
     svg.setAttribute('height', '200');
     svg.setAttribute('viewBox', '0 0 100 100');
 
-    const radius = 40;
-    const circumference = 2 * Math.PI * radius;
-    const total = totalUp + totalDown;
-    const ratio = totalUp / total;
-    const offset = circumference * (1 - ratio);
-
-    const bgCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    bgCircle.setAttribute('cx', '50');
-    bgCircle.setAttribute('cy', '50');
-    bgCircle.setAttribute('r', radius.toString());
-    bgCircle.setAttribute('fill', 'none');
-    bgCircle.setAttribute('stroke', '#ddd');
-    bgCircle.setAttribute('stroke-width', '8');
-
-    const progressCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    progressCircle.setAttribute('cx', '50');
-    progressCircle.setAttribute('cy', '50');
-    progressCircle.setAttribute('r', radius.toString());
-    progressCircle.setAttribute('fill', 'none');
-    progressCircle.setAttribute('stroke', '#4CAF50');
-    progressCircle.setAttribute('stroke-width', '8');
-    progressCircle.setAttribute('stroke-dasharray', circumference.toString());
-    progressCircle.setAttribute('stroke-dashoffset', offset.toString());
-    progressCircle.setAttribute('transform', 'rotate(-90 50 50)');
-
     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     text.setAttribute('x', '50');
     text.setAttribute('y', '50');
     text.setAttribute('text-anchor', 'middle');
     text.setAttribute('dominant-baseline', 'middle');
-    text.setAttribute('font-size', '16');
-    text.textContent = `${Math.round(ratio * 100)}%`;
+    text.setAttribute('font-size', '70');
+    text.setAttribute('fill', '#FFFFFF');
+    text.textContent = `${(totalUp / totalDown).toFixed(1)}`;
 
-    svg.appendChild(bgCircle);
-    svg.appendChild(progressCircle);
     svg.appendChild(text);
-
     return svg;
 }
-
 export function formatFileSize(bytes: number): string {
     if (bytes < 1000) {
         return `${bytes} B`;

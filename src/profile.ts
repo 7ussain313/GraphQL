@@ -28,7 +28,7 @@ async function createProfileUI() {
             auditsRatio(),
             userProjectXp()
         ]);
-        
+
         const user = userResponse.data.user[0];
         const attrs = user.attrs;
         const totalXP = xpResponse.data.transaction_aggregate.aggregate.sum.amount || 0;
@@ -46,19 +46,13 @@ async function createProfileUI() {
             auditData,
             formatFileSize
         );
-        
+
         const graphContainer = profileContainer.querySelector('.graph-container') as HTMLElement;
         if (graphContainer) {
-            const auditGraph = createAuditRatioGraph(auditData.totalUp, auditData.totalDown);
+            const auditGraph = createAuditRatioGraph(auditData.auditRatio, 1);
             graphContainer.appendChild(auditGraph);
-            
-            graphContainer.addEventListener('mouseover', () => {
-                graphContainer.style.transform = 'scale(1.1)';
-            });
-            graphContainer.addEventListener('mouseout', () => {
-                graphContainer.style.transform = 'scale(1)';
-            });
         }
+
 
         const projectGraphContainer = profileContainer.querySelector('.project-graph-container') as HTMLElement;
         if (projectGraphContainer) {
@@ -68,18 +62,18 @@ async function createProfileUI() {
                     name: proj.object.name,
                     amount: proj.amount
                 }));
-            
+
             const projectGraph = createProjectXPChart(latestProjects);
             projectGraphContainer.appendChild(projectGraph);
         }
 
         const progressGraphContainer = profileContainer.querySelector('.progress-graph-container') as HTMLElement;
         if (progressGraphContainer) {
-        const progressGraph = createXPProgressGraph(projectResponse.data.transaction);
-        progressGraphContainer.appendChild(progressGraph);
-}
+            const progressGraph = createXPProgressGraph(projectResponse.data.transaction);
+            progressGraphContainer.appendChild(progressGraph);
+        }
 
-        
+
         document.body.appendChild(profileContainer);
     } catch (error) {
         console.error('Error fetching profile data:', error);
